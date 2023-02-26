@@ -6,7 +6,7 @@ var columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 var rows = [1, 2, 3, 4, 5, 6, 7, 8];
 
 var INIT_WHITE = {
-    'A1': 'rook', 'B1': 'knight', 'C1': 'bishop', D1: 'king', 'E1': 'queen', 'F1': 'bishop', 'G1': 'knight', 'H1': 'rook',
+    'A1': 'rook', 'B1': 'knight', 'C1': 'bishop', D1: 'queen', 'E1': 'king', 'F1': 'bishop', 'G1': 'knight', 'H1': 'rook',
     'A2': 'pawn', 'B2': 'pawn', 'C2': 'pawn', 'D2': 'pawn', 'E2': 'pawn', 'F2': 'pawn', 'G2': 'pawn', 'H2': 'pawn',
   }
 
@@ -34,11 +34,13 @@ function BoardComponent() {
         {rows.map((row, i) => (
             <div key={i} style={{ display: "flex", justifyContent: "space-evenly", width: "800px" }}>
             {columns.map((cell, j) => {
-                let color = (i+j) %2 ?'white': 'black'
+                let color = (i+j) % 2 ?'white': 'gray'
+                let dark = (i+j) % 2 == 0
                 return(
                     <CellComponent
                     color={color}
                     cell={{figure: assignPiece(row,cell)}}
+                    dark={dark}
                     
                     />
                     )})}
