@@ -24,8 +24,10 @@ export class Piece {
     switch(name){
       case PIECE_NAME.pawn:
         return this.pawnCanMove(target);
-        case PIECE_NAME.rook:
-          return this.rookCanMove(target);
+      case PIECE_NAME.rook:
+        return this.rookCanMove(target);
+      case PIECE_NAME.bishop:
+        return this.bishopCanMove(target);
     }
   }
 
@@ -76,6 +78,18 @@ export class Piece {
       }
       return true
     }
+
+  }
+
+  bishopCanMove(target) {
+    if (target.id == this.cell.id) return false
+    if (this.cell.isEmptyDiagonallyFrom(target) ) {
+      if(target.piece) {
+        return target.isEnemy(this)
+      }
+      return true
+    }
+    return false
 
   }
 }
