@@ -24,6 +24,8 @@ export class Piece {
     switch(name){
       case PIECE_NAME.pawn:
         return this.pawnCanMove(target);
+        case PIECE_NAME.rook:
+          return this.rookCanMove(target);
     }
   }
 
@@ -59,30 +61,22 @@ export class Piece {
     }
     return false;
   }
-  isPawnMove(target) {
-    const direction = this.color === COLOR.black ? 1 : -1;
-    if (
-      (target.y === this.y + direction ||
-        (isFirstStep && target.y === this.y + firstStepDirection)) &&
-      target.x === this.x &&
-      this.board.getCell(target.x, target.y).isEmpty()
-    ) {
-      if (
-        isFirstStep &&
-        !this.board.getCell(this.x, this.y + direction).isEmpty()
-      ) {
-        return false;
+  
+  rookCanMove(target) {
+    if (target.id == this.cell.id) return false
+    if (target.x == this.cell.x && this.cell.isEmptyHorizontallyFrom(target) ) {
+      if(target.piece) {
+        return target.isEnemy(this)
       }
-      return true;
+      return true
     }
-    if (
-      target.y === this.y + direction &&
-      (target.x === this.x + 1 || target.x === this.x - 1) &&
-      this.isEnemy(target)
-    ) {
-      return true;
+    if (target.y == this.cell.y && this.cell.isEmptyVerticallyFrom(target)  ) {
+      if(target.piece) {
+        return target.isEnemy(this)
+      }
+      return true
     }
-    return false;
+
   }
 }
 
