@@ -6,16 +6,20 @@ export class Cell {
     x,
     y,
     color,
-    figure,
+    piece,
     id
   ) {
     this.id = id;
     this.x = x;
     this.y = y;
     this.color = color;
-    this.figure = figure;
+    this.piece = piece;
     this.board = board;
     this.available = false;  }
+
+    setPiece(piece) {
+      this.piece = piece
+    }
 }
 
 

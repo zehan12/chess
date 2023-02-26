@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CellComponent from "./CellComponent";
 
 
 
-function BoardComponent({board}) {
-    return(
+function BoardComponent({board, currentPlayer, setBoard}) {
+  const [selectedCell, setSelectedCell] = useState(null)
+
+  useEffect(() => {
+    highlightCells();
+  }, [selectedCell]);
+
+  function highlightCells() {
+    board.highlightCells(selectedCell, currentPlayer?.color);
+    updateBoard();
+  }
+
+  function updateBoard() {
+    const newBoard = board.getCloneBoard();
+    setBoard(newBoard);
+  }
+
+
+  const handleCellClick = (cell) => {
+    console.log('click',cell)
+    if (cell.piece?.color && cell.piece?.color === currentPlayer) {
+      console.log('inside if')
+      setSelectedCell(cell);
+    } else {
+      setSelectedCell(null)
+    }
+  console.log(selectedCell,"xxxx")
+
+
+    
+  }
+  console.log(selectedCell,"xxxx")
+  return(
 
         <div className="board">
         {board.cells.map((row, index) => (
@@ -12,6 +43,9 @@ function BoardComponent({board}) {
             {row.map((cell, j) => {
                 return(
                     <CellComponent
+                    highlightCells={selectedCell}
+                    key={cell.id}
+                    handleCellClick={() => handleCellClick(cell)}
                     cell={cell}
                     />
                     )})}

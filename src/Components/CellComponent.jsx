@@ -1,15 +1,16 @@
 import React from "react";
 import cn from 'classnames'
-function CellComponent ({ cell}) {
-     const {color, available, figure,x,y} = cell
+function CellComponent ({ cell, handleCellClick, highlightCells}) {
+     const {color, available, piece} = cell
      let dark = (color == 'black')
     //  console.log(cell)
         return (
           <div
-            className={cn('cell',{'bg-gray-600': dark})}
+            onClick={handleCellClick}
+            className={cn('cell',{'bg-gray-600': dark, 'bg-yellow-300':highlightCells?.id == cell?.id})}
           >
-            {available && !figure && <div className={"available"} />}
-            {figure && <div className="cell-figure" data-piece={figure.color + '-' + figure.name}>{figure.name + String(x) + String(y)}</div>}
+            {available && !piece && <div className={"available"} />}
+            {piece && <div className="cell-piece" data-piece={piece.color+'-'+piece.name}></div>}
           </div>
         );
 }
