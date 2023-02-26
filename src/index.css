@@ -89,3 +89,16 @@
 .cell, .cell-piece{
   display: flex; width: 100px; height: 100px;
 }
+
+.available{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+.inset-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

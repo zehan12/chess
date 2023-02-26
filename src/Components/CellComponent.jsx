@@ -1,16 +1,16 @@
 import React from "react";
 import cn from 'classnames'
-function CellComponent ({ cell, handleCellClick, highlightCells}) {
-     const {color, available, piece} = cell
+function CellComponent ({ cell, handleCellClick, isSelected}) {
+     const {color, available, piece,x,y} = cell
      let dark = (color == 'black')
     //  console.log(cell)
         return (
           <div
             onClick={handleCellClick}
-            className={cn('cell',{'bg-gray-600': dark, 'bg-yellow-300':highlightCells?.id == cell?.id})}
-          >
-            {available && !piece && <div className={"available"} />}
-            {piece && <div className="cell-piece" data-piece={piece.color+'-'+piece.name}></div>}
+            className={cn('cell relative',{'bg-gray-600': dark, 'bg-yellow-200':isSelected})}
+          >  {cell.id} -
+            {available && <div className={"available inset-center bg-green-400"} >{x + "/" + y}</div>}
+            {piece && <div className="cell-piece" data-piece={piece.color+'-'+piece.name}>{x + "/" + y}</div>}
           </div>
         );
 }

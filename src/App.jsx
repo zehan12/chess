@@ -1,4 +1,3 @@
-
 import { Fragment, useEffect, useState } from 'react';
 import BoardComponent from './Components/BoardComponent';
 import "./index.css"
@@ -14,7 +13,9 @@ function App() {
   const [currentPlayer, setCurrentPlayer] = useState(COLOR.white)
     useEffect(() => {
     restart();
-  },[])
+  },[]) 
+
+  console.log(board)
 
   function swapPlayer() {
     setCurrentPlayer(
@@ -22,9 +23,6 @@ function App() {
     );
   }
 
-
-
-  
   function restart() {
     const newBoard = new Board();
     newBoard.initCells();

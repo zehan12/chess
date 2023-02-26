@@ -4,14 +4,6 @@ import Piece from "./Pieces";
 const columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const rows = [1, 2, 3, 4, 5, 6, 7, 8].reverse();
 
-const PIECE_NAME = {
-    king: 'king',
-    queen: 'queen',
-    rook: 'rook',
-    knight: 'knight',
-    bishop: 'bishop',
-    pawn: 'pawn',
-}
 
 // const COLOR = {
 //     black: 'gray',
@@ -25,7 +17,7 @@ var INIT_WHITE = {
 
   var INIT_BLACK = {
     'A8': 'rook', 'B8': 'knight', 'C8': 'bishop', D8: 'queen', 'E8': 'king', 'F8': 'bishop', 'G8': 'knight', 'H8': 'rook',
-    'A7': 'pawn', 'B7': 'pawn', 'C7': 'pawn', 'D7': 'pawn', 'E7': 'pawn', 'F7': 'pawn', 'G7': 'pawn', 'H7': 'pawn',
+    'A7': 'pawn', 'B7': 'pawn', 'C7': 'pawn', 'D7': 'pawn', 'E7': 'pawn', 'F7': 'pawn', 'G7': 'pawn', 'H7': 'pawn', D3: 'pawn'
   }
 
   function assignPiece(id) {
@@ -60,7 +52,6 @@ export class Board {
             let cell = new Cell(this, i, j, color, null, id)
             let piece = pieceDetails ? new Piece(pieceDetails.color, cell, pieceDetails.name) : null
             cell.setPiece(piece)
-            console.log(cell,piece)
 
                 row.push(cell); //Black cells
         })
@@ -80,11 +71,17 @@ export class Board {
 
 
     highlightCells(selectedCell, color) {
+      if(!selectedCell) return
+      const highlited = []
       for (let i = 0; i < this.cells.length; i++) {
         const row = this.cells[i];
         for (let j = 0; j < row.length; j++) {
           let target = row[j];
-     
+          if(selectedCell.piece.canMove(target)) {
+            console.log('highlited', target.id)
+            target.available = true
+          } else {
+            target.available = false          }
         }
       }
     }

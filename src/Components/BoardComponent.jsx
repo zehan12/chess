@@ -22,19 +22,15 @@ function BoardComponent({board, currentPlayer, setBoard}) {
 
 
   const handleCellClick = (cell) => {
-    console.log('click',cell)
     if (cell.piece?.color && cell.piece?.color === currentPlayer) {
-      console.log('inside if')
       setSelectedCell(cell);
     } else {
       setSelectedCell(null)
     }
-  console.log(selectedCell,"xxxx")
 
 
     
   }
-  console.log(selectedCell,"xxxx")
   return(
 
         <div className="board">
@@ -43,7 +39,7 @@ function BoardComponent({board, currentPlayer, setBoard}) {
             {row.map((cell, j) => {
                 return(
                     <CellComponent
-                    highlightCells={selectedCell}
+                    isSelected={selectedCell?.id == cell.id}
                     key={cell.id}
                     handleCellClick={() => handleCellClick(cell)}
                     cell={cell}
