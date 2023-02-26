@@ -28,6 +28,13 @@ export class Piece {
         return this.rookCanMove(target);
       case PIECE_NAME.bishop:
         return this.bishopCanMove(target);
+      case PIECE_NAME.knight:
+        return this.knightCanMove(target);
+        case PIECE_NAME.king:
+          return this.kingCanMove(target);
+          case PIECE_NAME.queen:
+            return this.queenCanMove(target);
+
     }
   }
 
@@ -92,6 +99,58 @@ export class Piece {
     return false
 
   }
+
+  knightCanMove(target) {
+      const dx = Math.abs(this.cell.x - target.x);
+      const dy = Math.abs(this.cell.y - target.y);
+
+      if(target.piece && !target.isEnemy(this)) return false 
+  
+      return (dx === 1 && dy === 2) || (dx === 2 && dy === 1);
+  }
+
+  queenCanMove(target) {
+    if(target.piece && !target.isEnemy(this)) return false 
+
+    if (this.cell.isEmptyVerticallyFrom(target)) {
+      return true;
+    }
+    if (this.cell.isEmptyHorizontallyFrom(target)) {
+      return true;
+    }
+    if (this.cell.isEmptyDiagonallyFrom(target)) {
+      return true;
+    }
+    return false;
+}
+
+kingCanMove(target) {
+  if (
+    Math.abs(target.x - this.cell.x) > 1 ||
+    Math.abs(target.y - this.cell.y) > 1
+  ) {
+    return false;
+  }
+
+  if(target.piece && !target.isEnemy(this)) return false 
+
+  if (this.cell.isEmptyVerticallyFrom(target)) {
+    return true;
+  }
+
+  if (this.cell.isEmptyHorizontallyFrom(target)) {
+    return true;
+  }
+
+  if (this.cell.isEmptyDiagonallyFrom(target)) {
+    return true;
+  }
+  if (!this.cell.board.isCellUnderAttack(target, this.color)) {
+    return false;
+  }
+
+  return false;
+}
 }
 
 

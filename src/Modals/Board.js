@@ -12,7 +12,7 @@ const rows = [1, 2, 3, 4, 5, 6, 7, 8].reverse();
 
 var INIT_WHITE = {
     'A1': 'rook', 'B1': 'knight', 'C1': 'bishop', D1: 'queen', 'E1': 'king', 'F1': 'bishop', 'G1': 'knight', 'H1': 'rook',
-    'A2': 'pawn', 'B2': 'pawn', 'C2': 'pawn', 'D2': 'pawn', 'E2': 'pawn', 'F2': 'pawn', 'G2': 'pawn', 'H2': 'pawn', D5: 'bishop'
+    'A2': 'pawn', 'B2': 'pawn', 'C2': 'pawn', 'D2': 'pawn', 'E2': 'pawn', 'F2': 'pawn', 'G2':'pawn', 'H2': 'pawn', D5: 'knight', D4: 'queen'
   }
 
   var INIT_BLACK = {
@@ -84,6 +84,30 @@ export class Board {
             target.available = false          }
         }
       }
+    }
+
+    isCellUnderAttack(target, color) {
+      let targetUnderAttack = false;
+      this.cells.forEach((element) => {
+        element.forEach((cell) => {
+          if (cell.figure?.color !== color) {
+            if (
+              cell.figure?.name === FigureNames.PAWN &&
+              cell.isPawnAttack(target)
+            ) {
+              targetUnderAttack = true;
+            }
+  
+            if (
+              cell.figure?.canMove(target) &&
+              cell.figure?.name !== FigureNames.PAWN
+            ) {
+              targetUnderAttack = true;
+            }
+          }
+        });
+      });
+        return targetUnderAttack;
     }
     }
 
