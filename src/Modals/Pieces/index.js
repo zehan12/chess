@@ -5,15 +5,14 @@ export class Piece {
   constructor(color, cell, name) {
     this.color = color;
     this.cell = cell;
-    this.cell.piece = this;
     this.name = name;
     this.id = Math.random();
-    this.cell.setPiece(this);
+    cell.setPiece(this);
     this.isFirstStep = true;
   }
 
   canMove(target) {
-    if (target.figure?.color === this.color) {
+    if (target.piece?.color === this.color) {
       return false;
     }
     return this.checkPositions(this.name,target)
@@ -43,18 +42,35 @@ export class Piece {
     const steps = this.isFirstStep ? 2 : 1
 
     // Move Forward
-    if( this.cell.y == target.y  && this.cell.x + (steps * direction) <= target.x
+    if(this.color == 'white'){
+      if( this.cell.y == target.y  && this.cell.x + (steps * direction) <= target.x
       && this.cell.x > target.x && target.isEmpty() && this.cell.isEmptyVerticallyFrom(target) ) {
-      return true
+        return true
+      }
+
+      //Diagonall
+      if (
+        target.x === this.cell.x + (1 * direction) &&
+        (target.y === this.cell.y + 1 || target.y === this.cell.y - 1) && target.isEnemy(this)
+      ) {
+        return true;
+      }
     }
 
-    // Check Diagonal
-    if (
-      target.x === this.cell.x + (1 * direction) &&
-      (target.y === this.cell.y + 1 || target.y === this.cell.y - 1) && target.isEnemy(this)
-    ) {
-      return true;
+    if(this.color == 'black'){
+      if(this.cell.y == target.y  && this.cell.x + (steps * direction) >= target.x && this.cell.x < target.x && target.isEmpty() && this.cell.isEmptyVerticallyFrom(target)) {
+        return true
+      }
+      //diagonall
+      console.log(target.isEnemy(this))
+      if (
+        target.x === this.cell.x + 1 &&
+        (target.y === this.cell.y + 1 || target.y === this.cell.y - 1) && target.isEnemy(this)
+      ) {
+        return true;
+      }
     }
+
 
     return false
   }

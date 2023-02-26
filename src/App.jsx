@@ -19,7 +19,7 @@ function App() {
 
   function swapPlayer() {
     setCurrentPlayer(
-      currentPlayer?.color === COLOR.white ? COLOR.black : COLOR.white
+      currentPlayer === COLOR.white ? COLOR.black : COLOR.white
     );
   }
 
@@ -31,8 +31,10 @@ function App() {
   }
   return (
     <Fragment>
+      <h2>CHESS GAME</h2>
+      <h3>Current Player: {currentPlayer}</h3>
       <div id="board">
-      <BoardComponent board={board} setBoard={setBoard} currentPlayer={currentPlayer}  />
+      <BoardComponent board={board} setBoard={setBoard} currentPlayer={currentPlayer} swapPlayer={swapPlayer}  />
       </div>
     </Fragment>
   )

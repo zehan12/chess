@@ -79,6 +79,17 @@ export class Cell {
       }
       return true;
     }
+
+    movePiece(targetCell){
+      let currentPiece = this.piece
+      if (currentPiece.canMove(targetCell)) {
+        currentPiece.isFirstStep = false
+        let cell = this.board.getCell(targetCell.x,targetCell.y)
+        cell.setPiece(currentPiece)
+        currentPiece.cell = cell
+        this.piece = null
+      }
+    }
 }
 
 

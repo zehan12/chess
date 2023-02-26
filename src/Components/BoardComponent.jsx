@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
 import CellComponent from "./CellComponent";
 
+/* TODO: 
+  - Check condition
+  - enpasant
+  - casteling
+  - pawn Promotion
+  -stalemate
+  - if Check cannot move piece if they dosent remove check
+  - checkmate
+  */
+
+    
 
 
-function BoardComponent({board, currentPlayer, setBoard}) {
+function BoardComponent({board, currentPlayer, setBoard, swapPlayer}) {
   const [selectedCell, setSelectedCell] = useState(null)
 
   useEffect(() => {
@@ -22,10 +33,23 @@ function BoardComponent({board, currentPlayer, setBoard}) {
 
 
   const handleCellClick = (cell) => {
-    if (cell.piece?.color && cell.piece?.color === currentPlayer) {
-      setSelectedCell(cell);
+    if(selectedCell) {
+      if(selectedCell.id == cell.id) return setSelectedCell(null)
+      if(cell.available) {
+        selectedCell.movePiece(cell)
+        swapPlayer();
+        setSelectedCell(null)
+        return
+      } if(selectedCell.piece?.color == cell.piece?.color) {
+        setSelectedCell(cell);
+      }
+
     } else {
-      setSelectedCell(null)
+      if (cell.piece?.color && cell.piece?.color === currentPlayer) {
+        setSelectedCell(cell);
+      } else {
+        setSelectedCell(null)
+      }
     }
 
 

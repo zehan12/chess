@@ -8,9 +8,9 @@ function CellComponent ({ cell, handleCellClick, isSelected}) {
           <div
             onClick={handleCellClick}
             className={cn('cell relative',{'bg-gray-600': dark, 'bg-yellow-200':isSelected})}
-          >  {cell.id} -
-            {available && <div className={"available inset-center bg-green-400"} >{x + "/" + y}</div>}
-            {piece && <div className="cell-piece" data-piece={piece.color+'-'+piece.name}>{x + "/" + y}</div>}
+          >
+            {available && <div className={"available inset-center bg-green-400"} ></div>}
+            {piece && <div className="cell-piece" data-piece={piece.color+'-'+piece.name}></div>}
           </div>
         );
 }
